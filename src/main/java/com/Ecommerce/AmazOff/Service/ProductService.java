@@ -1,6 +1,6 @@
 package com.Ecommerce.AmazOff.Service;
 
-import com.Ecommerce.AmazOff.DTO.RequestDTO.AddProductRequestDTO;
+import com.Ecommerce.AmazOff.DTO.RequestDTO.ProductRequestDTO;
 import com.Ecommerce.AmazOff.DTO.ResponseDTO.ProductResponseDTO;
 import com.Ecommerce.AmazOff.Enum.ProductCategory;
 import com.Ecommerce.AmazOff.Exception.SellerNotFoundException;
@@ -23,17 +23,17 @@ public class ProductService {
     @Autowired
     SellerRepository sellerRepository;
 
-    public ProductResponseDTO addProduct(AddProductRequestDTO addProductRequestDTO) throws SellerNotFoundException {
+    public ProductResponseDTO addProduct(ProductRequestDTO productRequestDTO) throws SellerNotFoundException {
         Seller seller;
         //check if seller id is valid
         try{
-            seller = sellerRepository.findById(addProductRequestDTO.getSellerId()).get();
+            seller = sellerRepository.findById(productRequestDTO.getSellerId()).get();
         }catch(Exception e){
             throw new SellerNotFoundException("Invalid seller id");
         }
 
         //create product
-        Product product = ProductConvertor.productRequestDTOtoProduct(addProductRequestDTO);
+        Product product = ProductConvertor.productRequestDTOtoProduct(productRequestDTO);
         product.setSeller(seller); //seller is set
         seller.getListOfProducts().add(product);//add product
 

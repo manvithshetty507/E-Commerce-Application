@@ -1,18 +1,18 @@
 package com.Ecommerce.AmazOff.convertor;
 
-import com.Ecommerce.AmazOff.DTO.RequestDTO.AddProductRequestDTO;
+import com.Ecommerce.AmazOff.DTO.RequestDTO.ProductRequestDTO;
 import com.Ecommerce.AmazOff.DTO.ResponseDTO.ProductResponseDTO;
 import com.Ecommerce.AmazOff.Enum.ProductStatus;
 import com.Ecommerce.AmazOff.Model.Product;
 
 public class ProductConvertor {
 
-    public static Product productRequestDTOtoProduct(AddProductRequestDTO addProductRequestDTO){
+    public static Product productRequestDTOtoProduct(ProductRequestDTO productRequestDTO){
         return Product.builder()
-                .name(addProductRequestDTO.getProductName())
-                .price(addProductRequestDTO.getPrice())
-                .quantity(addProductRequestDTO.getQuantity())
-                .productCategory(addProductRequestDTO.getProductCategory())
+                .name(productRequestDTO.getProductName())
+                .price(productRequestDTO.getPrice())
+                .quantity(productRequestDTO.getQuantity())
+                .productCategory(productRequestDTO.getProductCategory())
                 .productStatus(ProductStatus.AVAILABLE)
                 .build();
     }

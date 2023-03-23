@@ -1,7 +1,7 @@
 package com.Ecommerce.AmazOff.Service;
 
-import com.Ecommerce.AmazOff.DTO.RequestDTO.AddSellerRequestDTO;
-import com.Ecommerce.AmazOff.DTO.ResponseDTO.GetSellerResponseDTO;
+import com.Ecommerce.AmazOff.DTO.RequestDTO.SellerRequestDTO;
+import com.Ecommerce.AmazOff.DTO.ResponseDTO.SellerResponseDTO;
 import com.Ecommerce.AmazOff.Exception.SellerNotFoundException;
 import com.Ecommerce.AmazOff.Model.Seller;
 import com.Ecommerce.AmazOff.Repository.SellerRepository;
@@ -19,23 +19,23 @@ public class SellerService {
     @Autowired
     SellerRepository sellerRepository;
 
-    public void addSeller(AddSellerRequestDTO addSellerRequestDTO){
-        Seller seller = SellerConvertor.SellerRequestDTOtoSeller(addSellerRequestDTO);
+    public void addSeller(SellerRequestDTO sellerRequestDTO){
+        Seller seller = SellerConvertor.SellerRequestDTOtoSeller(sellerRequestDTO);
         sellerRepository.save(seller);
     }
 
-    public ResponseEntity<List<GetSellerResponseDTO>> GetAllSellers() {
-        List<GetSellerResponseDTO> allSellers = new ArrayList<>();
+    public ResponseEntity<List<SellerResponseDTO>> GetAllSellers() {
+        List<SellerResponseDTO> allSellers = new ArrayList<>();
         List<Seller> sellers = sellerRepository.findAll();
         for(Seller s : sellers){
-            GetSellerResponseDTO g = new GetSellerResponseDTO(s.getName(),s.getPanNo());
+            SellerResponseDTO g = new SellerResponseDTO(s.getName(),s.getPanNo());
             allSellers.add(g);
         }
         return new ResponseEntity<>(allSellers, HttpStatus.CREATED);
     }
 
 
-    public GetSellerResponseDTO getSellerByPan(String panNo) throws SellerNotFoundException{
+    public SellerResponseDTO getSellerByPan(String panNo) throws SellerNotFoundException{
 
         Seller seller;
 
@@ -45,8 +45,8 @@ public class SellerService {
             throw new SellerNotFoundException("Invalid Pan Number");
         }
 
-        GetSellerResponseDTO getSellerResponseDTO = new GetSellerResponseDTO(seller.getName(), seller.getPanNo());
-        return getSellerResponseDTO;
+        SellerResponseDTO sellerResponseDTO = new SellerResponseDTO(seller.getName(), seller.getPanNo());
+        return sellerResponseDTO;
 
     }
 

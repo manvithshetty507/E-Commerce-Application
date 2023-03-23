@@ -30,8 +30,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     List<Card> listOfCards = new ArrayList<>();
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
-    List<Cart> listOfCarts = new ArrayList<>();
+    @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
+    Cart cart;
 
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     List<Ordered> listOfOrders = new ArrayList<>();

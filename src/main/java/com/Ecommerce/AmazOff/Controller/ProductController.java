@@ -1,11 +1,10 @@
 package com.Ecommerce.AmazOff.Controller;
 
-import com.Ecommerce.AmazOff.DTO.RequestDTO.AddProductRequestDTO;
+import com.Ecommerce.AmazOff.DTO.RequestDTO.ProductRequestDTO;
 import com.Ecommerce.AmazOff.DTO.ResponseDTO.ProductResponseDTO;
 import com.Ecommerce.AmazOff.Enum.ProductCategory;
 import com.Ecommerce.AmazOff.Exception.SellerNotFoundException;
 import com.Ecommerce.AmazOff.Service.ProductService;
-import com.Ecommerce.AmazOff.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +22,10 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody AddProductRequestDTO addProductRequestDTO ) throws SellerNotFoundException {
+    public ResponseEntity<ProductResponseDTO> addProduct(@RequestBody ProductRequestDTO productRequestDTO) throws SellerNotFoundException {
         ProductResponseDTO productResponseDTO;
         try{
-            productResponseDTO = productService.addProduct(addProductRequestDTO);
+            productResponseDTO = productService.addProduct(productRequestDTO);
         }catch(Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
