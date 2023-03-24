@@ -2,6 +2,7 @@ package com.Ecommerce.AmazOff.Model;
 
 import com.Ecommerce.AmazOff.Enum.CardType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "card")
 
 public class Card {

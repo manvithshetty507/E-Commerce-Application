@@ -15,5 +15,5 @@ import java.util.List;
 public class CardResponseDTO {
 
     private String name;
-    private List<CardDTO> cards;
+    private List<CardDTO> cardDTOs;
 }
