@@ -3,6 +3,7 @@ package com.Ecommerce.AmazOff.Service;
 import com.Ecommerce.AmazOff.DTO.RequestDTO.ProductRequestDTO;
 import com.Ecommerce.AmazOff.DTO.ResponseDTO.ProductResponseDTO;
 import com.Ecommerce.AmazOff.Enum.ProductCategory;
+import com.Ecommerce.AmazOff.Exception.ProductNotFoundException;
 import com.Ecommerce.AmazOff.Exception.SellerNotFoundException;
 import com.Ecommerce.AmazOff.Model.Product;
 import com.Ecommerce.AmazOff.Model.Seller;
@@ -54,5 +55,15 @@ public class ProductService {
             }
         }
         return productResponseDTOS;
+    }
+
+    public String getById(int id) throws ProductNotFoundException {
+        Product product;
+        try{
+            product = productRepository.findById(id).get();
+        }catch(Exception e){
+            throw new ProductNotFoundException("Invalid product id");
+        }
+        return product.getName();
     }
 }

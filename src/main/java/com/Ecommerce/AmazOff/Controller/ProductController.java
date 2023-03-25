@@ -32,6 +32,17 @@ public class ProductController {
         return new ResponseEntity<>(productResponseDTO,HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/getById")
+    public ResponseEntity<String> getById(@RequestParam int id){
+        String name;
+        try{
+            name = productService.getById(id);
+        }catch(Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(name,HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/get/category/{productCategory}")
     public ResponseEntity<List<ProductResponseDTO>> getProductsByCategory(@PathVariable("productCategory") ProductCategory productCategory){
         List<ProductResponseDTO> products = productService.getProductsByCategory(productCategory);

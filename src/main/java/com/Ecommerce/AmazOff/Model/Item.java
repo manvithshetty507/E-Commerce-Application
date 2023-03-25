@@ -1,6 +1,8 @@
 package com.Ecommerce.AmazOff.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "item")
 
 public class Item {
@@ -19,11 +22,16 @@ public class Item {
 
     private int requiredQuantity;
 
+
+    @OneToOne
+    @JoinColumn
+    Product product;
+
     @ManyToOne
     @JoinColumn
     Cart cart;
 
     @ManyToOne
     @JoinColumn
-    Ordered order;
+    Ordered orders;
 }

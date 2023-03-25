@@ -2,6 +2,7 @@ package com.Ecommerce.AmazOff.Model;
 
 import com.Ecommerce.AmazOff.Enum.ProductCategory;
 import com.Ecommerce.AmazOff.Enum.ProductStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,4 +37,7 @@ public class Product {
     @ManyToOne
     @JoinColumn
     Seller seller;
+
+    @OneToOne(mappedBy = "product",cascade = CascadeType.ALL)
+    Item item;
 }
