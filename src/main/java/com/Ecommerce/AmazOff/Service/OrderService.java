@@ -13,6 +13,8 @@ import com.Ecommerce.AmazOff.Repository.OrderedRepository;
 import com.Ecommerce.AmazOff.Repository.ProductRepository;
 import com.Ecommerce.AmazOff.convertor.OrderedConvertor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class OrderService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    JavaMailSender emailSender;
 
 
     public OrderResponseDTO placeOrder(OrderRequestDTO orderRequestDTO) throws CustomerNotFoundException, ProductNotFoundException, InsufficientQuantity {
@@ -62,6 +67,8 @@ public class OrderService {
         }
         order.setTotal(total);
         order.setDeliveryCharge(delivery);
+        order.setQuantityOrdered(orderRequestDTO.getRequiredQuantity());
+
         //prepare card to  make payment
         Card card = customer.getListOfCards().get(0);
         StringBuilder cardNo = new StringBuilder();
@@ -71,6 +78,8 @@ public class OrderService {
         }
         //append last for
         cardNo.append(card.getCardNo().substring(15));
+        order.setCardUsedForPayment(String.valueOf(cardNo));
+
 
         Item item = new Item();
         item.setRequiredQuantity(orderRequestDTO.getRequiredQuantity());
@@ -98,6 +107,16 @@ public class OrderService {
                 .totalCost(order.getTotal())
                 .deliveryCharge(40)
                 .build();
+
+        // send an email
+        String text = "Congrats your order with total value "+order.getTotal()+" has been placed";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("mt1138@gmail.com");
+        message.setTo(customer.getEmail());
+        message.setSubject("Order Placed Notification");
+        message.setText(text);
+        emailSender.send(message);
 
         return orderResponseDTO;
     }
